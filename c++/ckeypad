@@ -1,0 +1,35 @@
+#include <cstdarg>
+#include <cstdint>
+#include <cstdlib>
+#include <ostream>
+#include <new>
+
+enum class Lock {
+  Locked = 0,
+  Unlocked = 1,
+  UnlockedPowerOnly = 2,
+};
+
+struct Keypad;
+
+using Callback = void(*)(uintptr_t, uint8_t);
+
+extern "C" {
+
+Keypad *keypad_new();
+
+void keypad_delete(Keypad *kp);
+
+int keypad_init(Keypad *kp);
+
+void keypad_run(Keypad *kp);
+
+void keypad_set_lock(Keypad *kp, Lock lock);
+
+Lock keypad_get_lock(Keypad *kp);
+
+void keypad_set_on_pressed(Keypad *kp, Callback callback, uintptr_t arg);
+
+void keypad_set_on_released(Keypad *kp, Callback callback, uintptr_t arg);
+
+}  // extern "C"

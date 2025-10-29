@@ -1,0 +1,13 @@
+[package]
+name = "keypad"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+anyhow = "1.0.100"
+atomic_enum = "0.3.0"
+i2cdev = "0.6.1"
+stdint = "1.0.0"
