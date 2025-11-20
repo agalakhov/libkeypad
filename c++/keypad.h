@@ -34,7 +34,7 @@ public:
 
   static void         SetLock                   (locking_mode mode)          // Locks or unlocks the keypad.
   {
-      ::keypad_set_lock(kp, mode);
+      ::keypad_set_lock(kp, static_cast<Lock>(mode));
   }
 
   static void         Terminate                 ()                           // Terminates the keypad driver.

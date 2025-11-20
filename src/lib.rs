@@ -2,8 +2,8 @@ mod keypad;
 mod layout;
 
 use atomic_enum::atomic_enum;
-use std::ffi::c_int;
-use stdint::{uint8_t, uintptr_t};
+use std::ffi::{c_int, c_char};
+use stdint::uint32_t;
 
 use keypad::Keypad as KeypadDriver;
 use layout::Symbol;
@@ -82,16 +82,16 @@ pub unsafe extern "C" fn keypad_get_lock(kp: *mut Keypad) -> Lock {
     }
 }
 
-pub type Callback = unsafe extern "C" fn(uintptr_t, uint8_t);
+pub type Callback = unsafe extern "C" fn(c_char, uint32_t);
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn keypad_set_on_pressed(kp: *mut Keypad, callback: Callback, arg: uintptr_t) {
+pub unsafe extern "C" fn keypad_set_on_pressed(kp: *mut Keypad, callback: Callback, arg: uint32_t) {
     let kp = unsafe { &mut *kp };
     if let Some(ref mut drv) = kp.driver {
         let cb = move |sym: Symbol| {
-            let chr = sym.chr() as uint8_t;
+            let chr = sym.chr() as c_char;
             unsafe {
-                callback(arg, chr);
+                callback(chr, arg);
             }
         };
         drv.set_on_pressed(Box::new(cb));
@@ -99,13 +99,13 @@ pub unsafe extern "C" fn keypad_set_on_pressed(kp: *mut Keypad, callback: Callba
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn keypad_set_on_released(kp: *mut Keypad, callback: Callback, arg: uintptr_t) {
+pub unsafe extern "C" fn keypad_set_on_released(kp: *mut Keypad, callback: Callback, arg: uint32_t) {
     let kp = unsafe { &mut *kp };
     if let Some(ref mut drv) = kp.driver {
         let cb = move |sym: Symbol| {
-            let chr = sym.chr() as uint8_t;
+            let chr = sym.chr() as c_char;
             unsafe {
-                callback(arg, chr);
+                callback(chr, arg);
             }
         };
         drv.set_on_released(Box::new(cb));
