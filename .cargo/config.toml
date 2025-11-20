@@ -1,0 +1,10 @@
+[build]
+target = "armv7-unknown-linux-musleabihf"
+
+[target.armv7-unknown-linux-gnueabihf]
+runner = "qemu-arm"
+linker = "arm-linux-gnueabihf-gcc"
+
+[target.armv7-unknown-linux-musleabihf]
+runner = "qemu-arm"
+linker = "lld"
