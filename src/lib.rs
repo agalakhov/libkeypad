@@ -82,10 +82,10 @@ pub unsafe extern "C" fn keypad_get_lock(kp: *mut Keypad) -> Lock {
     }
 }
 
-pub type Callback = unsafe extern "C" fn(c_char, uint32_t);
+pub type KpCallback = unsafe extern "C" fn(c_char, uint32_t);
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn keypad_set_on_pressed(kp: *mut Keypad, callback: Callback, arg: uint32_t) {
+pub unsafe extern "C" fn keypad_set_on_pressed(kp: *mut Keypad, callback: KpCallback, arg: uint32_t) {
     let kp = unsafe { &mut *kp };
     if let Some(ref mut drv) = kp.driver {
         let cb = move |sym: Symbol| {
@@ -99,7 +99,7 @@ pub unsafe extern "C" fn keypad_set_on_pressed(kp: *mut Keypad, callback: Callba
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn keypad_set_on_released(kp: *mut Keypad, callback: Callback, arg: uint32_t) {
+pub unsafe extern "C" fn keypad_set_on_released(kp: *mut Keypad, callback: KpCallback, arg: uint32_t) {
     let kp = unsafe { &mut *kp };
     if let Some(ref mut drv) = kp.driver {
         let cb = move |sym: Symbol| {

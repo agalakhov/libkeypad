@@ -12,7 +12,7 @@ enum class Lock {
 
 struct Keypad;
 
-using Callback = void(*)(char, uint32_t);
+using KpCallback = void(*)(char, uint32_t);
 
 extern "C" {
 
@@ -28,8 +28,8 @@ void keypad_set_lock(Keypad *kp, Lock lock);
 
 Lock keypad_get_lock(Keypad *kp);
 
-void keypad_set_on_pressed(Keypad *kp, Callback callback, uint32_t arg);
+void keypad_set_on_pressed(Keypad *kp, KpCallback callback, uint32_t arg);
 
-void keypad_set_on_released(Keypad *kp, Callback callback, uint32_t arg);
+void keypad_set_on_released(Keypad *kp, KpCallback callback, uint32_t arg);
 
 }  // extern "C"
