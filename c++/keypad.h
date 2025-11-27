@@ -10,7 +10,7 @@ typedef void (*key_event_handler) (char, uint32_t);
 class keypad {
 public:
   // Represents the locking mode
-  enum class locking_mode {
+  enum locking_mode {
       UNLOCKED  = (int)Lock::Unlocked,           // All keys unlocked
       LOCKED    = (int)Lock::Locked,             // All keys locked
       ON_OFF    = (int)Lock::UnlockedPowerOnly   // All keys locked except for the power key
